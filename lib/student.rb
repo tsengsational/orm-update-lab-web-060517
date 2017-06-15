@@ -42,8 +42,7 @@ class Student
       sql = "INSERT INTO students (name, grade) VALUES (?, ?)"
       arr = DB[:conn].execute(sql, [self.name, self.grade])
     else
-      sql = "UPDATE students SET name = ?, grade = ? WHERE id = ?"
-      arr = DB[:conn].execute(sql, [self.name, self.grade, self.id])
+      self.update
     end
   end
 
@@ -77,4 +76,10 @@ class Student
     DB[:conn].execute(sql, self.name, self.grade, self.id)
   end
 
+end
+
+def values
+  column_names.map do |attribute|
+    self.send(attribute)
+  end.join(", ")
 end
